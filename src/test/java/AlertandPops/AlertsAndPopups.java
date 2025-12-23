@@ -1,61 +1,89 @@
-//Alerts: Handle browser pop-up alerts and prompts.
-
 package AlertandPops;
 
 import java.time.Duration;
+import java.util.List;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.Alert;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+// If your project uses WebDriverManager, uncomment the import below and call WebDriverManager.chromedriver().setup();
+// import io.github.bonigarcia.wdm.WebDriverManager;
+
+/*
+ * AlertsAndPopups:
+ * - Navigates to the demo page
+ * - Handles an alert, a confirmation and a prompt
+ * - Switches into an iframe if the demo buttons are inside one
+ * - Uses explicit waits and ensures the browser is closed in a finally block
+ */
 public class AlertsAndPopups {
 
     public static void main(String[] args) {
 
-        // Launches a new Chrome browser session and assigns it to the driver object
+        // If chromedriver isn't available via Selenium Manager / PATH, enable WebDriverManager:
+        // WebDriverManager.chromedriver().setup();
+
         WebDriver driver = new ChromeDriver();
 
-        // Maximizes the browser window
-        driver.manage().window().maximize();
+        try {
+            driver.manage().window().maximize();
+            driver.get("https://testautomationpractice.blogspot.com/");
 
-        // Opens the specified URL in the browser
-        driver.get("https://testautomationpractice.blogspot.com/");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // Wait setup
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            // Some demo pages place the alert buttons inside an iframe. If so, switch to the first iframe.
+            List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+            if (!frames.isEmpty()) {
+                driver.switchTo().frame(frames.get(0));
+            }
 
-        // 1. Handling JavaScript Alert
-        driver.findElement(By.xpath("//button[text()='Alert']")).click();
+            // 1) JavaScript Alert
+            WebElement alertBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//button[contains(normalize-space(.),'Alert') or contains(.,'Alert Box') or contains(.,'Alert')]")
+            ));
+            alertBtn.click();
 
-        // Wait for alert to be present
-        wait.until(ExpectedConditions.alertIsPresent());
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert alert = driver.switchTo().alert();
+            System.out.println("Alert text: " + alert.getText());
+            alert.accept();
 
-        // Switch to alert and accept it
-        Alert alert = driver.switchTo().alert();
-        System.out.println("Alert text: " + alert.getText());
-        alert.accept();
+            // 2) Confirmation pop-up
+            WebElement confirmBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//button[contains(.,'Confirm') or contains(.,'Confirm Box') or contains(.,'Confirm') ]")
+            ));
+            confirmBtn.click();
 
-        // 2. Handling Confirmation Pop-up
-        driver.findElement(By.xpath("//button[text()='Confirm Box']")).click();
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert confirmAlert = driver.switchTo().alert();
+            System.out.println("Confirm box text: " + confirmAlert.getText());
+            // choose dismiss or accept based on test need
+            confirmAlert.dismiss();
 
-        wait.until(ExpectedConditions.alertIsPresent());
-        Alert confirmAlert = driver.switchTo().alert();
-        System.out.println("Confirm box text: " + confirmAlert.getText());
-        confirmAlert.dismiss(); // or confirmAlert.accept();
+            // 3) Prompt pop-up
+            WebElement promptBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//button[contains(.,'Prompt') or contains(.,'Prompt Box') or contains(.,'Prompt')]")
+            ));
+            promptBtn.click();
 
-        // 3. Handling Prompt Pop-up
-        driver.findElement(By.xpath("//button[text()='Prompt']")).click();
+            wait.until(ExpectedConditions.alertIsPresent());
+            Alert promptAlert = driver.switchTo().alert();
+            System.out.println("Prompt text: " + promptAlert.getText());
+            promptAlert.sendKeys("Rakesh");
+            promptAlert.accept();
 
-        wait.until(ExpectedConditions.alertIsPresent());
-        Alert promptAlert = driver.switchTo().alert();
-        System.out.println("Prompt text: " + promptAlert.getText());
-        promptAlert.sendKeys("Rakesh");
-        promptAlert.accept();
-
-        // Close the browser
-        driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Ensure the browser is always closed even if something fails
+            if (driver != null) {
+                driver.quit();
+            }
+        }
     }
 }

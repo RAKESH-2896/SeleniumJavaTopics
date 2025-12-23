@@ -1,28 +1,42 @@
-//File upload: Automate uploading files through input fields.
-
 package FileUpload;
+
+import java.io.File;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class FileUpload {
 
-	  public static void main(String[] args) {
+    public static void main(String[] args) {
+        // Ensure the chromedriver binary is available (WebDriverManager will download/setup it)
+        WebDriverManager.chromedriver().setup();
 
-		  // Launches a new Chrome browser session and assigns it to the driver object
-	        WebDriver driver = new ChromeDriver();
+        WebDriver driver = new ChromeDriver();
+        try {
+            driver.manage().window().maximize();
+            driver.get("https://testautomationpractice.blogspot.com/");
 
-	        // Maximizes the browser window
-	        driver.manage().window().maximize();
+            // Use a real file path. Recommended: place a test file under src/test/resources/file.txt
+            File file = new File(System.getProperty("user.dir") + "/src/test/resources/file.txt");
+            if (!file.exists()) {
+                System.err.println("File not found: " + file.getAbsolutePath());
+                return;
+            }
 
-	        // Opens the specified URL in the browser
-	        driver.get("https://testautomationpractice.blogspot.com/");
-	        
-	        driver.findElement(By.id("fileInput")).sendKeys("C:\\path\\to\\file.txt");
-	        // ...additional steps if needed...
-	       
-	        // Closes all browser windows and ends the WebDriver session
-	        driver.quit(); 
-	    }
-	}
+            // Upload by sending the absolute path to the input[type='file'] element
+            driver.findElement(By.id("fileInput")).sendKeys(file.getAbsolutePath());
+
+            // small pause to observe the result (optional)
+            Thread.sleep(2000);
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            // Close browser and quit WebDriver session
+            driver.quit();
+        }
+    }
+}

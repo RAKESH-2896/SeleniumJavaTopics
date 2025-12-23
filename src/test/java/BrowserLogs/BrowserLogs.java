@@ -1,32 +1,53 @@
-//Browser logs: Retrieve logs for debugging browser activity.
-
 package BrowserLogs;
+
+import java.util.Date;
+import java.util.logging.Level;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.remote.CapabilityType;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BrowserLogs {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
+        // Ensure ChromeDriver binary is available (uses WebDriverManager)
+        WebDriverManager.chromedriver().setup();
 
-		  // Launches a new Chrome browser session and assigns it to the driver object
-	        WebDriver driver = new ChromeDriver();
+        // Enable browser logging
+        LoggingPreferences logPrefs = new LoggingPreferences();
+        logPrefs.enable(LogType.BROWSER, Level.ALL);
 
-	        // Maximizes the browser window
-	        driver.manage().window().maximize();
+        ChromeOptions options = new ChromeOptions();
+        options.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, logPrefs);
 
-	        // Opens the specified URL in the browser
-	        driver.get("https://testautomationpractice.blogspot.com/");
-	        
-	        LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
-	        for (LogEntry entry : logs) {
-	            System.out.println(entry.getMessage());
-	        }
-	        
-	     // Closes all browser windows and ends the WebDriver session
-	        driver.quit(); 
-	}	        
+        WebDriver driver = new ChromeDriver(options);
+
+        try {
+            // Maximize window and open URL
+            driver.manage().window().maximize();
+            driver.get("https://testautomationpractice.blogspot.com/");
+
+            // Small pause to allow console logs to appear (adjust if necessary)
+            Thread.sleep(2000);
+
+            // Retrieve and print browser logs
+            LogEntries logs = driver.manage().logs().get(LogType.BROWSER);
+            for (LogEntry entry : logs) {
+                System.out.printf("%s %s %s%n", new Date(entry.getTimestamp()), entry.getLevel(), entry.getMessage());
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.err.println("Interrupted: " + e.getMessage());
+        } finally {
+            // Close browser and cleanup
+            driver.quit();
+        }
+    }
 }

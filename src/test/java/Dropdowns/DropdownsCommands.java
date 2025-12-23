@@ -1,5 +1,3 @@
-//Dropdowns: Select options from dropdown menus.
-
 package Dropdowns;
 
 import java.time.Duration;
@@ -9,42 +7,58 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class DropdownsCommands {
 
-	   public static void main(String[] args) {
-   
-		     // Launches a new Chrome browser session and assigns it to the driver object
-	        WebDriver driver = new ChromeDriver();
+    public static void main(String[] args) {
+        WebDriver driver = null;
 
-	        // Maximizes the browser window
-	        driver.manage().window().maximize();
+        try {
+            // Ensure chromedriver binary is available
+            WebDriverManager.chromedriver().setup();
 
-	        // Opens the specified URL in the browser
-	        driver.get("https://testautomationpractice.blogspot.com/");
+            // Launch Chrome
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
 
-	        // Implicit wait
-	        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-	 
-	        WebElement countryDropdown = driver.findElement(By.id("country"));
+            // Navigate to site
+            driver.get("https://testautomationpractice.blogspot.com/");
 
-	        // Create Select object
-	        Select select = new Select(countryDropdown);
+            // Explicit wait for the dropdown element to be present/clickable
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            WebElement countryDropdown = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.id("country"))
+            );
 
-	        // 1. Select by visible text
-	        select.selectByVisibleText("India");
+            // Create Select object
+            Select select = new Select(countryDropdown);
 
-	        // 2. Select by value
-	        select.selectByValue("usa");
+            // 1. Select by visible text
+            select.selectByVisibleText("India");
 
-	        // 3. Select by index
-	        select.selectByIndex(3); // Index starts from 0
+            // 2. Select by value (ensure this value exists in the select options)
+            // e.g. if the option value attribute is "usa" this will work
+            select.selectByValue("usa");
 
-	        // Print selected option
-	        WebElement selectedOption = select.getFirstSelectedOption();
-	        System.out.println("Currently selected: " + selectedOption.getText());
+            // 3. Select by index (index starts from 0). Make sure index is within bounds.
+            // Here index 3 selects the 4th option.
+            select.selectByIndex(3);
 
-	        // Close the browser
-	        driver.quit();
-	    }
-	}
+            // Print currently selected option
+            WebElement selectedOption = select.getFirstSelectedOption();
+            System.out.println("Currently selected: " + selectedOption.getText());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close browser if it was created
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+    }
+}

@@ -1,65 +1,99 @@
-//Element finding and actions: Locate elements and perform actions like click or type.
-
 package ElementFinding;
+
+import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+/**
+ * Element finding and actions: Locate elements and perform actions like click or type.
+ * 
+ * Notes:
+ * - Uses WebDriverManager to ensure the correct chromedriver is available.
+ * - Uses explicit waits to avoid timing issues.
+ * - Ensures the driver is closed in a finally block.
+ */
 public class WebElementFunctions {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		// Launch Chrome browser
-        WebDriver driver = new ChromeDriver();
+        // Setup ChromeDriver binary (WebDriverManager)
+        WebDriverManager.chromedriver().setup();
 
-        // Maximize window
-        driver.manage().window().maximize();
+        // Optional ChromeOptions - adjust if needed
+        ChromeOptions options = new ChromeOptions();
+        // Some Chrome/driver combinations require this flag; remove if unnecessary
+        options.addArguments("--remote-allow-origins=*");
 
-        // Navigate to the test page
-        driver.get("https://testautomationpractice.blogspot.com/");
+        WebDriver driver = new ChromeDriver(options);
 
-        // Locate the name input field
-        WebElement nameField = driver.findElement(By.id("name"));
+        // Use try/finally to ensure the browser is closed
+        try {
+            // Maximize window
+            driver.manage().window().maximize();
 
-        // Clear the field
-        nameField.clear();
+            // Navigate to the test page
+            driver.get("https://testautomationpractice.blogspot.com/");
 
-        // Type text
-        nameField.sendKeys("Rakesh");
+            // Use explicit wait
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // Get entered value
-        String enteredValue = nameField.getAttribute("value");
-        System.out.println("Entered value: " + enteredValue);
+            // Locate the name input field (wait until visible)
+            WebElement nameField = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("name")));
 
-        // Get tag name
-        String tagName = nameField.getTagName();
-        System.out.println("Tag name: " + tagName);
+            // Clear the field
+            nameField.clear();
 
-        // Get CSS value
-        String cssColor = nameField.getCssValue("color");
-        System.out.println("CSS color: " + cssColor);
+            // Type text
+            nameField.sendKeys("Rakesh");
 
-        // Get location and size
-        Rectangle rect = nameField.getRect();
-        System.out.println("Location: (" + rect.getX() + ", " + rect.getY() + ")");
-        System.out.println("Size: Width = " + rect.getWidth() + ", Height = " + rect.getHeight());
+            // Get entered value
+            String enteredValue = nameField.getAttribute("value");
+            System.out.println("Entered value: " + enteredValue);
 
-        // Locate and click the submit button
-        WebElement submitButton = driver.findElement(By.id("submit"));
-        submitButton.click(); // or submitButton.submit();
+            // Get tag name
+            String tagName = nameField.getTagName();
+            System.out.println("Tag name: " + tagName);
 
-        // Locate a button with visible text and get its text
-        WebElement clickButton = driver.findElement(By.xpath("//button[text()='Click Me']"));
-        String buttonText = clickButton.getText();
-        System.out.println("Button text: " + buttonText);
+            // Get CSS value
+            String cssColor = nameField.getCssValue("color");
+            System.out.println("CSS color: " + cssColor);
 
-        // Click the button
-        clickButton.click();
-        
-        // Close browser
-        driver.quit();
+            // Get location and size
+            Rectangle rect = nameField.getRect();
+            System.out.println("Location: (" + rect.getX() + ", " + rect.getY() + ")");
+            System.out.println("Size: Width = " + rect.getWidth() + ", Height = " + rect.getHeight());
+
+            // Locate and click the submit button (wait until clickable)
+            WebElement submitButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("submit")));
+            submitButton.click(); // or submitButton.submit();
+
+            // Locate a button with visible text and get its text
+            WebElement clickButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Click Me']")));
+            String buttonText = clickButton.getText();
+            System.out.println("Button text: " + buttonText);
+
+            // Click the button
+            clickButton.click();
+
+            // Small pause if you want to observe result (not recommended for real tests)
+            // Thread.sleep(1000);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close browser
+            if (driver != null) {
+                driver.quit();
+            }
+        }
     }
 }
