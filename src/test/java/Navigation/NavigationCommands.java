@@ -1,4 +1,4 @@
-// NavigationCommands.java
+// Navigation: Move between pages, refresh, and go back/forward.
 
 package Navigation;
 
@@ -11,9 +11,6 @@ public class NavigationCommands {
 	
 	 public static void main(String[] args) {
 	
-/*
- 		Navigation Commands
-*/
 		  // Launches a new Chrome browser session and assigns it to the driver object
 	        WebDriver driver = new ChromeDriver();
 

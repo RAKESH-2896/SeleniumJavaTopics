@@ -1,3 +1,5 @@
+//Alerts: Handle browser pop-up alerts and prompts.
+
 package AlertandPops;
 
 import java.time.Duration;

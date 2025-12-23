@@ -1,4 +1,4 @@
-//Locators
+//Locators: are methods used in Selenium to find and interact with elements on a web page, such as by ID, name, class, tag, link text, or CSS selector.
 
 package Locators;
 

@@ -1,4 +1,4 @@
-//TimeoutsCommands
+//Timeouts: Set waiting times for page loads, scripts, and element searches.
 
 package Timeouts;
  
@@ -11,10 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class TimeoutsCommands {
  
     public static void main(String[] args) {
- 
-/*
- 		TimeoutsCommands
-*/
+
     	// Setup: Launch Chrome browser
 
         WebDriver driver = new ChromeDriver();

@@ -1,3 +1,5 @@
+//JavaScript execution: Run custom JavaScript code in the browser.
+
 package JavaScriptExecutor;
 
 import java.time.Duration;

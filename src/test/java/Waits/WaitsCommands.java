@@ -1,4 +1,4 @@
-//WaitsCommands
+//Waits (implicit, explicit, fluent): Wait for elements or conditions before proceeding.
 
 package Waits;
  
@@ -13,11 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class WaitsCommands {
  
     public static void main(String[] args) {
-    	
-/*
-		WaitsCommands
-*/
-    	
+    		
     	  // Launches a new Chrome browser session and assigns it to the driver object
         WebDriver driver = new ChromeDriver();
 

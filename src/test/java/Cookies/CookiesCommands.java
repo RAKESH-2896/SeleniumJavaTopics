@@ -1,4 +1,4 @@
-//CookiesCommands
+//Cookies: Manage browser cookies for sessions and preferences.
 
 package Cookies;
  
@@ -10,10 +10,6 @@ import org.openqa.selenium.Cookie;
 public class CookiesCommands {
  
     public static void main(String[] args) {
-
-/*
- 		CookiesCommands
-*/
     	
         // Launches a new Chrome browser session and assigns it to the driver object
         WebDriver driver = new ChromeDriver();

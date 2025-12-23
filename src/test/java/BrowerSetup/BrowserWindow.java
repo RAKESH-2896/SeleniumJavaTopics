@@ -1,4 +1,5 @@
-// BrowserWindow.java
+// Browser/window management: Control browser size, position, and open/close windows.
+
 package BrowerSetup;
 
 import java.util.Set;
@@ -10,10 +11,7 @@ public class BrowserWindow {
 
 	 public static void main(String[] args) {
 
-/*
- 		Browser Setup
-*/
-	        // Launches a new Chrome browser session and assigns it to the driver object
+		 // Launches a new Chrome browser session and assigns it to the driver object
 	        WebDriver driver = new ChromeDriver();
 
 	        // Maximizes the browser window

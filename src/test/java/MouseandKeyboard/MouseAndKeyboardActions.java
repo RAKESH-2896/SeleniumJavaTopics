@@ -1,3 +1,5 @@
+//Mouse/keyboard actions: Simulate user interactions like clicks and key presses.
+
 package MouseandKeyboard;
 
 import java.time.Duration;

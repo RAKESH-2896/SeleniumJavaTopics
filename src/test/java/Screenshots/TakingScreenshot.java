@@ -1,3 +1,5 @@
+//Screenshots (full and element): Capture images of the whole page or specific elements.
+
 package Screenshots;
 
 import java.io.File;

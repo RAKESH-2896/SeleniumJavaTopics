@@ -1,4 +1,4 @@
-//WebElementFunctions
+//Element finding and actions: Locate elements and perform actions like click or type.
 
 package ElementFinding;
 
@@ -11,10 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class WebElementFunctions {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-/*
- 	WebElementFunctions
- */
+
 		// Launch Chrome browser
         WebDriver driver = new ChromeDriver();
 

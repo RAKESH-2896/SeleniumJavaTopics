@@ -1,3 +1,5 @@
+//RobustMethods: Initialize Robot class
+
 package RobustMethods;
 
 import java.awt.AWTException;

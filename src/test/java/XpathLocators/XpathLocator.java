@@ -1,3 +1,6 @@
+//XpathLocator: use XML path expressions to navigate and identify elements in the HTML structure, allowing for flexible and powerful element selection, especially when other locators are insufficient.
+ 
+
 package XpathLocators;
 
 import org.openqa.selenium.By;

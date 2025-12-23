@@ -1,4 +1,4 @@
-//DropdownsCommands
+//Dropdowns: Select options from dropdown menus.
 
 package Dropdowns;
 
@@ -13,11 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 public class DropdownsCommands {
 
 	   public static void main(String[] args) {
-	    	
-/*
-	DropdownsCommands
- */
-		   
+   
 		     // Launches a new Chrome browser session and assigns it to the driver object
 	        WebDriver driver = new ChromeDriver();
 
