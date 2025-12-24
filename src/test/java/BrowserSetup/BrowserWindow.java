@@ -1,3 +1,5 @@
+//Browser/window management: Control browser size, position, and open/close windows.
+
 package BrowserSetup;
 
 import java.util.Set;
@@ -8,11 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class BrowserWindow {
 
     public static void main(String[] args) {
-        // If chromedriver is not on your PATH, set its location:
-        // System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
-        // Or use WebDriverManager (io.github.bonigarcia) before creating the driver:
-        // WebDriverManager.chromedriver().setup();
-
+     
         WebDriver driver = null;
         try {
             // Launch a new Chrome browser session

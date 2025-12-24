@@ -1,3 +1,5 @@
+//Waits (implicit, explicit, fluent): Wait for elements or conditions before proceeding.
+
 package Waits;
 
 import java.time.Duration;
@@ -14,9 +16,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class WaitsCommands {
 
     public static void main(String[] args) {
-
-        // If you don't have chromedriver on PATH, set system property or use WebDriverManager:
-        // System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
 
         WebDriver driver = new ChromeDriver();
 

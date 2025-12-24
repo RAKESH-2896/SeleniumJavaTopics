@@ -1,3 +1,5 @@
+// Element finding and actions: Locate elements and perform actions like click or type.
+
 package ElementFinding;
 
 import java.time.Duration;
@@ -13,14 +15,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-/**
- * Element finding and actions: Locate elements and perform actions like click or type.
- * 
- * Notes:
- * - Uses WebDriverManager to ensure the correct chromedriver is available.
- * - Uses explicit waits to avoid timing issues.
- * - Ensures the driver is closed in a finally block.
- */
 public class WebElementFunctions {
 
     public static void main(String[] args) {

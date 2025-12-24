@@ -1,3 +1,5 @@
+//Frames/windows/tabs: Switch between frames, windows, or browser tabs.
+
 package FramesandWindows;
 
 import java.time.Duration;

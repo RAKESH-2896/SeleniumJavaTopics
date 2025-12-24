@@ -1,3 +1,5 @@
+//File upload: Automate uploading files through input fields.
+
 package FileUpload;
 
 import java.io.File;

@@ -1,3 +1,5 @@
+//ConditionalCommands: Locate elements and check if textbox is displayed/enabled,check checkbox and radio button selection, then click them and re-check status.
+
 package Conditional;
 
 import java.util.List;
@@ -9,16 +11,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-/**
- * ConditionalCommands: Locate elements and check if textbox is displayed/enabled,
- * check checkbox and radio button selection, then click them and re-check status.
- *
- * Improvements / fixes:
- * - Use WebDriverManager to ensure ChromeDriver binary is available.
- * - Guard against missing elements using findElements (avoids NoSuchElementException).
- * - Ensure driver.quit() runs in finally so browser always closes.
- * - Basic exception handling and clearer messages.
- */
 public class ConditionalCommands {
 
     public static void main(String[] args) {
